@@ -1,0 +1,12 @@
+# 后端不要上传的
+backend/target/
+backend/*.log
+backend/.idea/
+backend/.vscode/
+application-dev.yml
+
+# 前端不要上传的
+frontend/node_modules/
+frontend/dist/
+frontend/.idea/
+frontend/.vscode/
