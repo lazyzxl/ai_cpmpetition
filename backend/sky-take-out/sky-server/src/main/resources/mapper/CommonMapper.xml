@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.sky.mapper.CommonMapper">
+    <select id="page" resultType="Competition">
+        select * from competition
+        <where>
+            <if test="name != null and name != ''">
+                name like concat('%',#{name},'%')
+                or title like concat('%',#{name},'%')
+                or description like concat('%',#{name},'%')
+            </if>
+        </where>
+        order by create_time desc
+    </select>
+</mapper>

@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.sky.mapper.CareMapper">
+
+    <delete id="deleteByCompetitionIdAndUserId">
+        DELETE FROM care WHERE competition_id = #{competitionId} AND user_id = #{userId}
+    </delete>
+    
+    <delete id="delete">
+        DELETE FROM care WHERE id IN 
+        <foreach collection="ids" item="id" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+    
+    <select id="page" resultType="com.sky.entity.care">
+        SELECT * FROM care
+        <where>
+            <if test="userId != null">
+                AND user_id = #{userId}
+            </if>
+        </where>
+        ORDER BY create_time DESC
+    </select>
+    
+    <select id="pageWithCompetition" resultType="com.sky.vo.CareItemVO">
+        SELECT 
+            c.id,
+            c.competition_id as competitionId,
+            c.create_time as createTime,
+            comp.name as competitionName,
+            comp.date as deadline,
+            '进行中' as status
+        FROM care c
+        LEFT JOIN competition comp ON c.competition_id = comp.id
+        <where>
+            <if test="userId != null">
+                AND c.user_id = #{userId}
+            </if>
+        </where>
+        ORDER BY c.create_time DESC
+    </select>
+
+</mapper>

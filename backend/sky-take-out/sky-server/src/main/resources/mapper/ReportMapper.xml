@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.sky.mapper.ReportMapper">
+    
+    <insert id="insert" parameterType="com.sky.entity.Report">
+        insert into report (create_time,create_user,comment_id,comment,cause,status) 
+        values (#{createTime},#{createUser},#{commentId},#{comment},#{cause},#{status})
+    </insert>
+    
+    <select id="page" parameterType="com.sky.dto.ReportPage" resultType="com.sky.entity.Report">
+        select * from report
+        <where>
+            <if test="status != null">
+                and status = #{status}
+            </if>
+            <if test="startTime != null and startTime != ''">
+                and create_time &gt;= #{startTime}
+            </if>
+            <if test="endTime != null and endTime != ''">
+                and create_time &lt;= #{endTime}
+            </if>
+        </where>
+        order by create_time desc
+    </select>
+    
+    <select id="pageByStatus" parameterType="com.sky.dto.ReportPage" resultType="com.sky.entity.Report">
+        select * from report
+        <where>
+            status = #{status}
+            <if test="startTime != null and startTime != ''">
+                and create_time &gt;= #{startTime}
+            </if>
+            <if test="endTime != null and endTime != ''">
+                and create_time &lt;= #{endTime}
+            </if>
+        </where>
+        order by create_time desc
+    </select>
+    
+    <update id="update" parameterType="com.sky.entity.Report">
+        update report set status = #{status} where id = #{id}
+    </update>
+    
+    <select id="getCount" resultType="java.lang.Integer">
+        select count(*) from report where status = 0
+    </select>
+    
+    <select id="getAll" resultType="com.sky.entity.Report">
+        select * from report order by create_time desc
+    </select>
+</mapper>

@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.sky.mapper.AIAnswerMapper">
+
+    <insert id="insert" parameterType="com.sky.entity.AIAnswer" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO ai_answer (content_id, user_id, question, type, answer, create_time)
+        VALUES (#{contentId}, #{userId}, #{question}, #{type}, #{answer}, #{createTime})
+    </insert>
+
+</mapper>
